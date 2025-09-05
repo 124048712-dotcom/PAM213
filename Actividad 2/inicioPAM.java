@@ -1,10 +1,17 @@
 public class inicioPAM{
+public static void main(String[] args) {
+    inicioPAM obj = new inicioPAM();
+    System.out.println(obj.ReglamentoPOO());
+    System.out.println(obj.LineamientosClassroom());
+    System.out.println(obj.FechasdeParciales());
+    System.out.println(obj.PorcentajesporParcial());
 
-public void ReglamentoPOO(){
+}
+public String ReglamentoPOO(){
     return "Participacion Activa en clase\n Trabajos Classroom\n Entregas Completas\n Respetar tiempo de entrega\n Trabajos de calidad";
 }
-public void LineamientosClassroom(){
-    return "1.Se requiere 80% de asistencia para tener derecho a evaluación parcial y 80% de trabajos en clase.\n
+public String LineamientosClassroom(){
+return "1. Se requiere 80% de asistencia para tener derecho a evaluación parcial y 80% de trabajos en clase.\n
 2.Se permiten 10 minutos de tolerancia y si el alumno llega después de este tiempo puede permanecer en la clase, pero no se tomará la asistencia (Solamente en los horarios de
 inicio:7:00a.m y 14:00 p.m).\n
 3. Las faltas deberán estar justificadas mediante el correo institucional con un plazo máximo de 24 horas posteriores a la hora de falta en clase mediante correo del tutor (a),
@@ -29,12 +36,12 @@ de tutores. En caso de no solucionarse pasar a la dirección del programa educat
 50% mas el jefe de grupo, es vigente para todo alumno inscrito en el curso aunque no esté presente en la primera sesión.\n";
 }
 
-public void FechasdeParciales(){
+public String FechasdeParciales(){
     return "1er Parcial:30-09-25 \n 2do Parcial:04-10-25\n 3er Parcial:02-12-25\n Final:08-12-25 ";
 }
 
 
-public void PorcentajesporParcial(){
+public String PorcentajesporParcial(){
     return "1P\n Conocimiento:40%\n Desempeño:20%\n Producto:30% \n Pi:10%\n\n2P\n Conocimiento:40%\n Desempeño:20%\n Producto:20%\n Pi:20%\n\n 2P\n Conocimiento:20%\n Desempeño:10%\n Producto:40% \n Pi:30% ";
 }
 
