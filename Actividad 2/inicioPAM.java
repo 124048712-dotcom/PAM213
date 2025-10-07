@@ -40,7 +40,6 @@ public String FechasdeParciales(){
     return "1er Parcial:30-09-25 \n 2do Parcial:04-10-25\n 3er Parcial:02-12-25\n Final:08-12-25 ";
 }
 
-
 public String PorcentajesporParcial(){
     return "1P\n Conocimiento:40%\n Desempeño:20%\n Producto:30% \n Pi:10%\n\n2P\n Conocimiento:40%\n Desempeño:20%\n Producto:20%\n Pi:20%\n\n 2P\n Conocimiento:20%\n Desempeño:10%\n Producto:40% \n Pi:30% ";
 }
