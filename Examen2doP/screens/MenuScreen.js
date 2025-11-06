@@ -1,11 +1,12 @@
 import { Text, StyleSheet, View, Button} from 'react-native'
 import React, { useState } from 'react'
+import GalScreen from './GalScreen';
 export default function MenuScreen (){
  const [screen,setScreen] = useState('menu');
 
     switch(screen){
-        case 'Galeria':
-            return <GaleriaScreen/>
+        case 'Gal':
+            return <GalScreen/>
 
                     case 'menu':
             default:
@@ -13,7 +14,7 @@ export default function MenuScreen (){
                         <View style={styles.container}>
                         <Text style={styles.title}>Menu</Text>
 
-                        <Button title='Pract:Galeria'color="#4D7C8A" onPress={()=>setScreen('Galeria')}/>
+                        <Button title='Pract:Galeria'color="#4D7C8A" onPress={()=>setScreen('Gal')}/>
 
 
                         </View>
