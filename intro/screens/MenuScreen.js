@@ -6,10 +6,14 @@ import { FlatList, TextInput } from 'react-native-web';
 import TextInputScreen from './TextInputScreen';
 import ImageScreen from './ImageScreen';
 import ScrollViewScreen from './ScrollViewScreen';
-import ActivityIndicator from './ActivityIndicator';
+
 import FlatListScreen from './FlatListScreen';
 import ModalScreen from './ModalScreen';
 import BottomSheetScreen from './BottomSheetScreen';
+import Repaso1Screen from './Repaso1Screen';
+import IndicatorScreen from './IndicatorScreen';
+import SeccionListScreen from'./SeccionListScreen';
+
 
 export default function MenuScreen() {
 
@@ -26,14 +30,20 @@ export default function MenuScreen() {
             return <ImageScreen/>
         case 'ScrollView':
             return <ScrollViewScreen/>
-        case 'ActivityIndicator':
-            return <ActivityIndicatorScreen/>
+        case'Indicator':
+            return<IndicatorScreen/>
         case 'FlatList':
             return<FlatListScreen/>
+        case'SeccionList':
+            return<SeccionListScreen/>
         case 'Modal':
             return<ModalScreen/>
         case 'BottomSheet':
             return<BottomSheetScreen/>
+        case 'Repaso1':
+            return<Repaso1Screen/>
+        
+        
         case 'menu':
             default:
                     return (
@@ -45,10 +55,15 @@ export default function MenuScreen() {
                         <Button title='Pract:TextInput' color="#4D7C8A" onPress={()=>setScreen('TextInput')}/>
                         <Button title='Pract:ImageBackground' color="#4D7C8A" onPress={()=>setScreen('ImageBackground')}/>
                         <Button title='Pract:ScrollView' color="#4D7C8A" onPress={()=>setScreen('ScrollView')}/>
-                        <Button title='Pract:ActivityIndicator' color="#4D7C8A" onPress={()=>setScreen('ActivityIndicator')}/>
+                        <Button title='Pract:Indicator' color="#4D7C8A" onPress={()=>setScreen('Indicator')}/>
+                        
                         <Button title='Pract:FlatList'color="#4D7C8A" onPress={()=>setScreen('FlatList')}/>
+                        <Button title='Pract:SeccionList' color="#4D7C8A" onPress={()=>setScreen('SeccionList')}/>
                         <Button title='Pract:Modal'color="#4D7C8A" onPress={()=>setScreen('Modal')}/>
                         <Button title='Pract:Bottom Sheet'color="#4D7C8A" onPress={()=>setScreen('BottomSheet')}/>
+                        <Button title='Pract:Repaso1'color="#4D7C8A" onPress={()=>setScreen('Repaso1')}/>
+                        
+
                         </View>
                     )
     }
