@@ -6,7 +6,7 @@ import Home from './screens/home';
 import Profile from './screens/profile';
 import Settings from './screens/settings';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();0
 
 export default function App() {
   return (
