@@ -4,8 +4,8 @@ export class Usuario{
         this.nombre = nombre;
         this.fechaCreacion = fechaCreacion || new Date().toISOString();
     }
-        //Validaciones del modelo
-        static validar(nombre){
+
+    static validar(nombre){
             if(!nombre||nombre.trim().length === 0){
                 throw new Error('El nombre no puede estar vacio');
             }

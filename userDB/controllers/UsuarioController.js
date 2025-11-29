@@ -1,4 +1,4 @@
-import {Usuario, usuario} from '../models/usuario';
+import {Usuario} from '../models/usuario';
 import DatabaseService from '../database/DatabaseService';
 
 export class UsuarioController{
@@ -11,7 +11,7 @@ export class UsuarioController{
     async obtenerUsuarios(){
         try{
             const data = await DatabaseService.getAll();
-            return data.map(u => new Usuario(u.id, u.nombre, u.fecha_creacion));
+            return data.map(u => new Usuario(u.id, u.nombre, u.fechacreacion));
         } catch (error){
             console.error('Error al obtener usuarios: ', error);
             throw new Error('No se pudieron cargar los usuarios');
@@ -25,20 +25,46 @@ export class UsuarioController{
             return new Usuario(
                 nuevoUsuario.id,
                 nuevoUsuario.nombre,
-                nuevoUsuario.fecha_creacion
+                nuevoUsuario.fechacreacion
             );
         } catch (error){
             console.error('Error al crear usuario:', error);
             throw error;
         }
     }
+    async actualizarUsuario(id, nombre) {
+        try {
+            console.log("Actualizando:",id,nombre)
+            Usuario.validar(nombre);
+            await DatabaseService.update(id, nombre.trim());
+            console.log("Actualizado");
+            this.notifyListeners();
+        } catch (error) {
+            console.error('Error al actualizar usuario', error);
+            throw error;
+        }
+    }
+
+    async eliminarUsuario(id) {
+        try{
+            await DatabaseService.remove(id);
+            this.notifyListeners();
+            return true;
+        }catch(error){
+            console.error('Error al eliminar usuario:', error);
+            throw error;
+        }
+    }
+
     addListener(callback){
         this.listeners.push(callback);
     }
     removeListener(callback){
         this.listeners = this.listeners.filter(l => l !== callback);
     }
-    notifyListeners(){
-        this.listeners.forEach(callback => callback());
+    notifyListeners(data){
+        this.listeners.forEach(callback => callback(data));
     }
+
+
 }

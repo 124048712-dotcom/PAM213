@@ -12,7 +12,7 @@ export default function UsuarioView() {
   const [nombre, setNombre] = useState('');
   const [loading, setLoading] = useState(true);
   const [guardando, setGuardando] = useState(false);
-
+  const [editando, setEditando] = useState(null);
 
   const cargarUsuarios = useCallback(async() => {
     try{
@@ -60,22 +60,65 @@ const handleAgregar = async () => {
     }
 };
 
+const handleActualizar = async() => {
+  if(!editando)return;
+  try{
+    setGuardando(true);
+    await controller.actualizarUsuario(editando.id, nombre);
+    Alert.alert('Actualizado', `Usuario "${editando.nombre}" actualizado`);
+    setEditando(null);
+    setNombre('');
+  } catch(error){
+    Alert.alert('Error',error.message);
+  } finally{
+    setGuardando(false);
+  }
+};
+
+const eliminarUsuario = async (id) => {
+  try {
+    await controller.eliminarUsuario(id);
+    await cargarUsuarios();   
+  } catch (error) {
+    console.log("Error eliminando:", error);
+  }
+};
+
 const renderUsuario = ({item, index}) => (
     <View style={styles.userItem}>
         <View style={styles.userNumber}>
             <Text style={styles.userNumberText}>{index + 1}</Text>
         </View>
+
         <View style={styles.userInfo}>
             <Text style={styles.userName}>{item.nombre}</Text>
             <Text style={styles.userId}>ID: {item.id}</Text>
+
             <Text style={styles.userDate}>
-                {new Date(item.fechaCreacion).toLocaleDateString('es-MX',{ 
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                })}
+                {item.fechaCreacion || item.fecha_creacion
+                  ? new Date(item.fechaCreacion || item.fecha_creacion).toLocaleDateString(
+                      'es-MX',
+                      { year:'numeric', month:'long', day:'numeric' }
+                    )
+                  : "Fecha no disponible"
+                }
             </Text>
         </View>
+
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() => { setEditando(item); setNombre(item.nombre); }}
+      >
+          <Text style={styles.actionText}>Editar</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity 
+        onPress={() => eliminarUsuario(item.id)} 
+        style={styles.deleteButton}
+      >
+          <Text style={styles.actionText}>Eliminar</Text>
+      </TouchableOpacity>
+
     </View>
 );
 
@@ -101,17 +144,16 @@ const renderUsuario = ({item, index}) => (
 
         <TouchableOpacity 
           style={[styles.button, guardando && styles.buttonDisabled]} 
-          onPress={handleAgregar}     
+          onPress={editando ? handleActualizar : handleAgregar}     
           disabled={guardando} >
 
           <Text style={styles.buttonText}>
-            {guardando ? ' Guardando...' : 'Agregar Usuario'}
+            {guardando ? ' Guardando...' : (editando ? 'Actualizar Usuario' :'Agregar Usuario')}
           </Text>
 
         </TouchableOpacity>
 
       </View>
-
 
       <View style={styles.selectSection}>
 
@@ -121,7 +163,7 @@ const renderUsuario = ({item, index}) => (
 
           <TouchableOpacity 
             style={styles.refreshButton}
-            onPress={cargarUsuarios}   
+            onPress={cargarUsuarios}
           >
             <Text style={styles.refreshText}>Recargar</Text>
           </TouchableOpacity>
@@ -135,9 +177,9 @@ const renderUsuario = ({item, index}) => (
           </View>
            ) : (
           <FlatList
-            data={usuarios}             
+            data={usuarios}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={renderUsuario}  
+            renderItem={renderUsuario}
             ListEmptyComponent={
               <View style={styles.emptyContainer}>
                 <Text style={styles.emptyText}> No hay usuarios</Text>
@@ -309,28 +351,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#bbb',
   },
-  mvcInfo: {
-    backgroundColor: '#e3f2fd',
-    padding: 15,
-    marginHorizontal: 15,
-    marginBottom: 15,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    borderLeftColor: '#2196F3',
+  editButton: {
+    backgroundColor: '#efacfcff',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 6,
+    marginLeft: 8,
   },
-  mvcTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#1976D2',
-    marginBottom: 8,
+  deleteButton: {
+    backgroundColor: '#f091afff',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 6,
+    marginLeft: 8,
   },
-  mvcText: {
-    fontSize: 12,
-    color: '#555',
-    lineHeight: 18,
-  },
-  bold: {
-    fontWeight: 'bold',
-    color: '#1976D2',
+  actionText: {
+    color: '#fff',
+    fontWeight: '600',
   },
 });
